@@ -1,7 +1,9 @@
-import Navbar from './components/navbar/Navbar';
-import Modal from './components/modals/Modal';
-import './globals.css';
 import { Nunito } from 'next/font/google';
+import Navbar from './components/navbar/Navbar';
+import './globals.css';
+import RegisterModal from './components/modals/RegisterModal';
+import ToasterProvider from './providers/ToasterProvider';
+import { Toaster } from 'react-hot-toast';
 
 const inter = Nunito({ subsets: ['latin'] });
 
@@ -14,7 +16,8 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Modal isOpen />
+        <ToasterProvider />
+        <RegisterModal />
         <Navbar />
         {children}
       </body>
