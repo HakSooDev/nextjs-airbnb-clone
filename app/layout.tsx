@@ -1,9 +1,10 @@
 import { Nunito } from 'next/font/google';
+import getCurrentUser from './actions/getCurrentUser';
+import LoginModal from './components/modals/LoginModal';
+import RegisterModal from './components/modals/RegisterModal';
 import Navbar from './components/navbar/Navbar';
 import './globals.css';
-import RegisterModal from './components/modals/RegisterModal';
 import ToasterProvider from './providers/ToasterProvider';
-import { Toaster } from 'react-hot-toast';
 
 const inter = Nunito({ subsets: ['latin'] });
 
@@ -12,13 +13,16 @@ export const metadata = {
   description: 'Airbnb clone',
 };
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
+const RootLayout = async ({ children }: { children: React.ReactNode }) => {
+  const currentUser = await getCurrentUser();
+
   return (
     <html lang="en">
       <body className={inter.className}>
         <ToasterProvider />
+        <LoginModal />
         <RegisterModal />
-        <Navbar />
+        <Navbar currentUser={currentUser} />
         {children}
       </body>
     </html>

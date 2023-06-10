@@ -13,13 +13,13 @@ datasource db {
 model User {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name String?
-  email String? @unique 
+  email String? @unique
   emailVerified DateTime?
   image String?
   hashedPassword String?
-  createdAt DateTime @default(now())  
-  updatedAt DateTime @updatedAt  
-  favoritedIds String[] @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  favoriteIds String[] @db.ObjectId
 
   accounts Account[]
   listings Listing[]
@@ -35,8 +35,8 @@ model Account {
   refresh_token String? @db.String
   access_token String? @db.String
   expires_at Int?
-  token_type Int?
-  scope String? 
+  token_type String?
+  scope String?
   id_token String?  @db.String
   session_state String?
 
@@ -47,10 +47,10 @@ model Account {
 
 model Listing {
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  title String 
+  title String
   description String
   imageSrc String
-  createdAt DateTime @default(now())  
+  createdAt DateTime @default(now())
   category String
   roomCount Int
   bathroomCount Int
@@ -67,13 +67,11 @@ model Reservation {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   userId String @db.ObjectId
   listingId String @db.ObjectId
-  startDate DateTime 
-  endDate DateTime 
+  startDate DateTime
+  endDate DateTime
   totalPrice Int
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
 }
-
-
