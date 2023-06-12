@@ -1,22 +1,14 @@
 'use client';
 
-import { signIn } from 'next-auth/react';
-import axios from 'axios';
-import { AiFillGithub } from 'react-icons/ai';
-import { FcGoogle } from 'react-icons/fc';
-import { useCallback, useMemo, useState } from 'react';
-import { FieldValues, RegisterOptions, SubmitHandler, UseFormRegisterReturn, useForm } from 'react-hook-form';
-import useRegisterModal from '../../hooks/useRegisterModal';
-import Modal from './Modal';
-import Heading from '../Heading';
-import Input from '../inputs/Input';
-import { toast } from 'react-hot-toast';
-import Button from '../Button';
-import useLoginModal from '@/app/hooks/useLoginModal';
-import { useRouter } from 'next/navigation';
 import useRentModal from '@/app/hooks/useRentModal';
-import { categories } from '../navbar/Categories';
+import dynamic from 'next/dynamic';
+import { useMemo, useState } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
+import Heading from '../Heading';
 import CategoryInput from '../inputs/CategoryInput';
+import CountrySelect from '../inputs/CountrySelect';
+import { categories } from '../navbar/Categories';
+import Modal from './Modal';
 
 enum STEPS {
   CATEGORY = 0,
@@ -54,6 +46,15 @@ const LoginModal = () => {
   });
 
   const category = watch('category');
+  const location = watch('location');
+
+  const Map = useMemo(
+    () =>
+      dynamic(() => import('../Map'), {
+        ssr: false,
+      }),
+    [location]
+  );
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -99,10 +100,18 @@ const LoginModal = () => {
           </div>
         ))}
       </div>
-      {/* <Input id="email" label="Email" register={register} errors={errors} required />
-      <Input id="password" label="Password" type="password" register={register} errors={errors} required /> */}
     </div>
   );
+
+  if (step === STEPS.LOCATION) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading title="Where is your place located?" subtitle="Help guests find you" />
+        <CountrySelect onChange={(value) => setCustomValue('location', value)} />
+        <Map center={location?.latlng} />
+      </div>
+    );
+  }
 
   // const footerContent = (
   //   <div className="flex flex-col gap-4 mt-3">
@@ -126,7 +135,7 @@ const LoginModal = () => {
       // disabled={isLoading}
       isOpen={rentModal.isOpen}
       onClose={rentModal.onClose}
-      onSubmit={rentModal.onClose}
+      onSubmit={onNext}
       title="Airbnb your home!"
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
