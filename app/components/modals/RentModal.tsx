@@ -9,6 +9,7 @@ import CategoryInput from '../inputs/CategoryInput';
 import CountrySelect from '../inputs/CountrySelect';
 import { categories } from '../navbar/Categories';
 import Modal from './Modal';
+import Counter from '../inputs/Counter';
 
 enum STEPS {
   CATEGORY = 0,
@@ -47,6 +48,9 @@ const LoginModal = () => {
 
   const category = watch('category');
   const location = watch('location');
+  const guestCount = watch('guestCount');
+  const roomCount = watch('roomCount');
+  const bathroomCount = watch('bathroomCount');
 
   const Map = useMemo(
     () =>
@@ -113,26 +117,36 @@ const LoginModal = () => {
     );
   }
 
-  // const footerContent = (
-  //   <div className="flex flex-col gap-4 mt-3">
-  //     <hr />
-  //     <Button outline label="Continue with Google" icon={FcGoogle} onClick={() => signIn('google')} />
-  //     <Button outline label="Continue with Github" icon={AiFillGithub} onClick={() => signIn('github')} />
-
-  //     <div className="text-neutral-500 text-center mt-4 font-light">
-  //       <div className="justify-center flex flex-row items-start gap-2">
-  //         <div>First time using Airbnb?</div>
-  //         <div onClick={toggle} className="text-neutral-800 cursor-pointer hover:underline ">
-  //           Create an account
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
+  if (step === STEPS.INFO) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading title="Share some basics about your place" subtitle="What amenities do you have?" />
+        <Counter
+          title="Guests"
+          subtitle="How many guests do you allow?"
+          value={guestCount}
+          onChange={(value) => setCustomValue('guestCount', value)}
+        />
+        <hr />
+        <Counter
+          title="Rooms"
+          subtitle="How many rooms do you have?"
+          value={roomCount}
+          onChange={(value) => setCustomValue('roomCount', value)}
+        />
+        <hr />
+        <Counter
+          title="Bathrooms"
+          subtitle="How many bathrooms do you have?"
+          value={bathroomCount}
+          onChange={(value) => setCustomValue('bathroomCount', value)}
+        />
+      </div>
+    );
+  }
 
   return (
     <Modal
-      // disabled={isLoading}
       isOpen={rentModal.isOpen}
       onClose={rentModal.onClose}
       onSubmit={onNext}
@@ -141,7 +155,6 @@ const LoginModal = () => {
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
       body={bodyContent}
-      // footer={footerContent}
     />
   );
 };
