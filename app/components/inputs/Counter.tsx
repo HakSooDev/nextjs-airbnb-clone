@@ -1,5 +1,6 @@
+'use client';
+
 import React, { useCallback } from 'react';
-import { IconType } from 'react-icons';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 
 interface Props {
