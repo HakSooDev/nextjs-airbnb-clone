@@ -26,7 +26,6 @@ const useFavorite = ({ listingId, currentUser }: IUserFavorite) => {
     async (e: React.MouseEvent<HTMLDivElement>) => {
       e.stopPropagation();
 
-      console.log('🚀  currentUser:', currentUser);
       if (!currentUser) {
         return loginModal.onOpen();
       }
