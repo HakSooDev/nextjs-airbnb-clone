@@ -6,6 +6,7 @@ import Navbar from './components/navbar/Navbar';
 import './globals.css';
 import ToasterProvider from './providers/ToasterProvider';
 import RentModal from './components/modals/RentModal';
+import SearchModal from './components/modals/SearchModal';
 
 const inter = Nunito({ subsets: ['latin'] });
 
@@ -22,6 +23,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
       <body className={inter.className}>
         <ToasterProvider />
         <LoginModal />
+        <SearchModal />
         <RegisterModal />
         <RentModal />
         <Navbar currentUser={currentUser} />
