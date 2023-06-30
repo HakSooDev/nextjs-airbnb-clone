@@ -9,6 +9,7 @@ import useRegisterModal from '../../hooks/useRegisterModal';
 import Avatar from '../Avatar';
 import MenuItem from './MenuItem';
 import useRentModal from '@/app/hooks/useRentModal';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   currentUser: SafeUser | null;
@@ -18,6 +19,8 @@ const UserMenu: React.FC<Props> = ({ currentUser }) => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const rentModal = useRentModal();
+
+  const router = useRouter();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -57,7 +60,12 @@ const UserMenu: React.FC<Props> = ({ currentUser }) => {
           <div className="flex flex-col cursor-pointer">
             {currentUser ? (
               <>
-                <MenuItem onClick={() => {}} label="My trips" />
+                <MenuItem
+                  onClick={() => {
+                    router.push('/trips');
+                  }}
+                  label="My trips"
+                />
                 <MenuItem onClick={() => {}} label="My favorites" />
                 <MenuItem onClick={() => {}} label="My reservations" />
                 <MenuItem onClick={() => {}} label="My properties" />
