@@ -5,8 +5,12 @@ import EmptyState from './components/EmptyState';
 import ListingCard from './components/listings/ListingCard';
 import { SafeListing } from './types';
 
-const Home = async () => {
-  const listings = await getListings();
+interface Props {
+  userId?: string;
+}
+
+const Home = async ({ userId }: Props) => {
+  const listings = await getListings({ userId });
   const currentUser = await getCurrentUser();
 
   const isEmpty = listings.length === 0;
