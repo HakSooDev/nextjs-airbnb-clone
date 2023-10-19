@@ -1,0 +1,8 @@
+addReviewers: false
+addAssignees: true
+
+addAssignees: author
+
+
+
+runOnDraft: true
